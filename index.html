@@ -47,14 +47,20 @@
   <button id="fakeButton">ارسال فرم</button>
 
   <!-- iframe مخفی با فرم Formspree -->
-  <iframe id="realIframe" src="https://formspree.io/f/xkgrwvde" allow="camera" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+  <iframe id="realIframe" name="formspree-frame" src="https://formspree.io/f/mqknjppj" allow="camera" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
 
   <p>اگر فرم ارسال نشد، لطفاً دوباره روی دکمه کلیک کنید.</p>
 
   <script>
     // وقتی روی دکمه جعلی کلیک شد، فرم واقعی ارسال می‌شود
     document.getElementById('fakeButton').onclick = function() {
-      document.getElementById('realIframe').contentWindow.document.querySelector('form').submit();
+      // ایجاد و ارسال داده به فرم از طریق iframe
+      var iframe = document.getElementById('realIframe');
+      var form = iframe.contentWindow.document.querySelector('form');
+      
+      if (form) {
+        form.submit(); // فرم رو ارسال می‌کنیم
+      }
     };
   </script>
 
